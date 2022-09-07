@@ -1,2 +1,2 @@
-# EEGDelayCoordinateEmbedding
-It's a repository specialized in performing Delay Coordinate Embedding on EEG data
+# Delay Coordinate Embedding Package
+In this repository we're creating a DCE processing package in Python.
