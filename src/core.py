@@ -63,11 +63,11 @@ class DCECore(object):
             parallel=True
         )
 
-        # returning the minimal M-value (if it is < 0.10), otherwise, returns max M-value
+        # returning the minimal M-value (if the f3 value obtained is < 0.10), otherwise, returns max M-value
         min_m_idx = [idx for (idx, fraction) in enumerate(f3) if fraction < frac_threshold]
 
         if min_m_idx:
-            return m_search_space[min_m_idx[0]]
+            return m_search_space[min_m_idx[0]+1]
 
         return m_search_space[-1]
 
