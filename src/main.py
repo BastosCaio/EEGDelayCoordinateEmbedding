@@ -17,7 +17,7 @@ class Application(object):
     DEFAULT_TAU_VALUE = 25
     DEFAULT_TAU_RANGE = 90
     DEFAULT_M_DIMS = 9
-    DEFAULT_MAX_NEIGHBORS_NUM = 500
+    DEFAULT_MAX_NEIGHBORS_NUM = 700
 
     def __init__(self):
         """
