@@ -58,7 +58,7 @@ class Application(object):
             print(f"Mutual information for electrode {electrode} just got calculated!")
 
             # calc delayed array for filtered data based on minimal_m and min_mi_idx (DCE)
-            print(f"Calculating DEC for electrode {electrode}")
+            print(f"Calculating DCE for electrode {electrode}")
             delayed_array = utils.reconstruct(filtered_data, minimal_m, min_mi_idx)
 
             # serializing the processed data and metadata info in a h5py object
