@@ -38,7 +38,7 @@ class Application(object):
             output_file_name = self.__generate_output_file_name()
         except:
             raise("The file you're trying to load doesn't exist!")
-
+            
         # iterating over each electrode
         print("Starting DCE Processing...")
         start_proc_time = time.time()
@@ -65,12 +65,13 @@ class Application(object):
             delayed_array = utils.reconstruct(filtered_data, minimal_m, min_mi_idx)
 
             # serializing the processed data and metadata info in a h5py object 
-            output_file = h5py.File(os.path.join(self.file_output_path, output_file_name), "w")
-            output_file.create_dataset(f"electrode_{electrode}: {channels[electrode-1]}", data=delayed_array)
-            output_file.attrs["minimal_m"] = minimal_m
-            output_file.attrs["min_mutial_info_idx"] = min_mi_idx
+            output_file = h5py.File(os.path.join(self.file_output_path, output_file_name), "a")
+            dataset = output_file.create_dataset(f"electrode_{electrode}: {channels[electrode-1]}", data=delayed_array)
+            dataset.attrs["minimal_m"] = minimal_m
+            dataset.attrs["min_mutial_info_idx"] = min_mi_idx
             output_file.close()
 
+        
         end_proc_time = time.time()
         print("DCE Processing finished! The new data was saved successfully!")
         print(f"It took {end_proc_time - start_proc_time}s to complete!")
