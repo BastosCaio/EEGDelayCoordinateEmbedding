@@ -2,7 +2,8 @@
 import scipy
 import numpy as np
 import matplotlib.pyplot as plt
-from nolitsa import dimension, delay, utils
+
+from dependencies.nolitsa.nolitsa import dimension, delay, utils
 
 
 class DCECore(object):

@@ -5,7 +5,10 @@ import time
 
 import mne
 import h5py
-from nolitsa import utils
+
+import sys
+sys.path.append('../')
+from dependencies.nolitsa.nolitsa import dimension, delay, utils
 
 from core import DCECore
 
@@ -17,7 +20,7 @@ class Application(object):
     DEFAULT_TAU_VALUE = 25
     DEFAULT_TAU_RANGE = 90
     DEFAULT_M_DIMS = 9
-    DEFAULT_MAX_NEIGHBORS_NUM = 700
+    DEFAULT_MAX_NEIGHBORS_NUM = 50000
 
     def __init__(self):
         """
@@ -40,7 +43,7 @@ class Application(object):
         print("Starting DCE Processing...")
         start_proc_time = time.time()
 
-        for electrode in range(n_electrodes+1):
+        for electrode in range(n_electrodes): # alterar depois para range(n_electrodes+1)
             # reading electrode data
             filtered_data = signals[electrode, :]
 
@@ -61,7 +64,7 @@ class Application(object):
             print(f"Calculating DCE for electrode {electrode}")
             delayed_array = utils.reconstruct(filtered_data, minimal_m, min_mi_idx)
 
-            # serializing the processed data and metadata info in a h5py object
+            # serializing the processed data and metadata info in a h5py object 
             output_file = h5py.File(os.path.join(self.file_output_path, output_file_name), "w")
             output_file.create_dataset(f"electrode_{electrode}: {channels[electrode-1]}", data=delayed_array)
             output_file.attrs["minimal_m"] = minimal_m
@@ -88,9 +91,9 @@ class Application(object):
 
     def __generate_output_file_name(self):
         """Generates a name for the output file."""
-        pattern = re.split("/", self.file_path)
-
-        return pattern[len(pattern)-1][:-4]
+        pattern = os.path.basename(self.file_path)
+        
+        return pattern[:-4] + '.hdf5'
 
 
 if __name__ == "__main__":
